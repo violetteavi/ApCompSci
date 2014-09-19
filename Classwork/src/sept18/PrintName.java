@@ -6,6 +6,26 @@ public class PrintName {
 		PrintName.printFirst();
 		System.out.print(" ");
 		PrintName.printLast();
+		System.out.println();
+		
+		PrintName.printFirst();
+		System.out.print(" ");
+		PrintName.printMiddle();
+		System.out.print(" ");
+		PrintName.printLast();
+		System.out.println();
+		
+		PrintName.printLast();
+		System.out.print(", ");
+		PrintName.printFirst();
+		System.out.println();
+
+		PrintName.printLast();
+		System.out.print(", ");
+		PrintName.printFirst();
+		System.out.print(" ");
+		PrintName.printMiddle();
+		System.out.println();
 	}
 	
 	public static void printFirst() {
