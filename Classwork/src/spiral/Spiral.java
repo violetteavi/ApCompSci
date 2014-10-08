@@ -24,7 +24,7 @@ public class Spiral {
 	}
 
 	/**
-	 * Returns a 2D array of ints of length x and height y that spiral.
+	 * Returns a 2D array of ints of length x and height y that spiral 1 through x * y inward.
 	 */
 	public int[][] spiral(int x, int y) {
 		int[][] toReturn = new int[y][x];

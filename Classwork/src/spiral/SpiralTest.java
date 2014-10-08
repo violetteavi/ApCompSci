@@ -83,4 +83,37 @@ public class SpiralTest {
 		assertTrue(test.isEqual(expected, actual));
 	}
 	
+	@Test
+	public void fiveByFive() {
+		Spiral test = new Spiral();
+		int[][] expected = new int[3][2];
+		expected[0][0] = 1;
+		expected[0][1] = 2;
+		expected[0][2] = 3;
+		expected[0][3] = 4;
+		expected[0][4] = 5;
+		expected[1][0] = 16;
+		expected[1][1] = 17;
+		expected[1][2] = 18;
+		expected[1][3] = 19;
+		expected[1][4] = 6;
+		expected[2][0] = 15;
+		expected[2][1] = 24;
+		expected[2][2] = 25;
+		expected[2][3] = 20;
+		expected[2][4] = 7;
+		expected[3][0] = 14;
+		expected[3][1] = 23;
+		expected[3][2] = 22;
+		expected[3][3] = 21;
+		expected[3][4] = 8;
+		expected[4][0] = 13;
+		expected[4][1] = 12;
+		expected[4][2] = 11;
+		expected[4][3] = 10;
+		expected[4][4] = 9;
+		int[][] actual = test.spiral(2,3);
+		assertTrue(test.isEqual(expected, actual));
+	}
+	
 }
