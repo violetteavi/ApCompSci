@@ -86,7 +86,7 @@ public class SpiralTest {
 	@Test
 	public void fiveByFive() {
 		Spiral test = new Spiral();
-		int[][] expected = new int[3][2];
+		int[][] expected = new int[5][5];
 		expected[0][0] = 1;
 		expected[0][1] = 2;
 		expected[0][2] = 3;
@@ -112,8 +112,14 @@ public class SpiralTest {
 		expected[4][2] = 11;
 		expected[4][3] = 10;
 		expected[4][4] = 9;
-		int[][] actual = test.spiral(2,3);
+		int[][] actual = test.spiral(5,5);
 		assertTrue(test.isEqual(expected, actual));
+	}
+	
+	@Test
+	public void goBigOrGoHome() {
+		Spiral test = new Spiral();
+		test.print(test.spiral(90, 100));
 	}
 	
 }
