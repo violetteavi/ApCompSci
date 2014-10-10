@@ -46,13 +46,21 @@ public class PathMakerTest {
 	}
 	
 	@Test
-	public void findPossiblePaths() {
-		int[] answers = new int[10];
+	public void findPossiblePathsForHC() {
+		int[][] answers = new int[10][2];
 		int i = 0;
-		for(int x = 1; i < 10; x++)	{
-			for(int y = 1; y <= x; y++) {
-				
+		for(int y = 1; i < 10; y++)	{
+			for(int x = 1; x <= y; x++) {
+				if(x + y - 2 == test.sumDigits(test.numPaths(x, y))) {
+					answers[i][0] = x;
+					answers[i][1] = y;
+					i++;
+				}				
 			}
+		}
+		for(int[] answer: answers) {
+			System.out.print("[ " + answer[0] + " , " + answer[1] + " ]");
+			System.out.println(test.numPaths(answer[0], answer[1]));
 		}
 	}
 }
