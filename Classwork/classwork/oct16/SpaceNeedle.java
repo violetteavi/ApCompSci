@@ -2,6 +2,7 @@ package oct16;
 
 public class SpaceNeedle {
 
+	public static final int SIZE = 10;
 	public static void main(String[] args) {
 		printTip();
 		printCap();
@@ -14,22 +15,25 @@ public class SpaceNeedle {
 	}
 	
 	public static void printTip() {
-		for(int i = 0; i < 4; i++) {
-			System.out.println("            ||");
+		for(int i = 0; i < SIZE; i++) {
+			for(int j = 0; j < SIZE; j++) {
+				System.out.print("   ");
+			}
+			System.out.println("||");
 		}
 	}
 	
 	public static void printCap() {
-		for(int i = 3; i >= 0; i--) {
+		for(int i = SIZE - 1; i >= 0; i--) {
 			for(int j = 0; j < i; j++) {
 				System.out.print("   ");
 			}
 			System.out.print("__/");
-			for(int h = 3 - i; h > 0; h--) {
+			for(int h = SIZE - 1 - i; h > 0; h--) {
 				System.out.print(":::");
 			}
 			System.out.print("||");
-			for(int h = 3 - i; h > 0; h--) {
+			for(int h = SIZE - 1 - i; h > 0; h--) {
 				System.out.print(":::");
 			}
 			System.out.println("\\__");
@@ -38,19 +42,19 @@ public class SpaceNeedle {
 	
 	public static void printLine() {
 		System.out.print("|");
-		for(int i = 0; i < 24; i++) {
+		for(int i = 0; i < SIZE * 6; i++) {
 			System.out.print("\"");
 		}
 		System.out.println("|");
 	}
 	
 	public static void printBottom() {
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < SIZE; i++) {
 			for(int j = 0; j < i; j++) {
 				System.out.print("  ");
 			}
 			System.out.print("\\_");
-			for(int h = 11 - 2 * i; h > 0; h--) {
+			for(int h = SIZE * 3 - 1 - 2 * i; h > 0; h--) {
 				System.out.print("/\\");
 			}
 			System.out.println("_/");
@@ -58,11 +62,19 @@ public class SpaceNeedle {
 	}
 	
 	public static void printSpine() {
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 9; j++) {
+		for(int i = 0; i < SIZE * SIZE; i++) {
+			for(int j = 0; j < SIZE * 2 + 1; j++) {
 				System.out.print(" ");
 			}
-			System.out.println("|%%||%%|");
+			System.out.print("|");
+			for(int j = 0; j < SIZE - 2; j++) {
+				System.out.print("%");
+			}
+			System.out.print("||");
+			for(int j = 0; j < SIZE - 2; j++) {
+				System.out.print("%");
+			}
+			System.out.println("|");
 		}
 	}
 }
