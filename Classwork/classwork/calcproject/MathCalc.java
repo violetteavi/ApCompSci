@@ -3,6 +3,14 @@ package calcproject;
 import java.util.Scanner;
 
 public class MathCalc {
+	
+	public static void main(String[] args) {
+//		Scanner kb = new Scanner(System.in);
+//		System.out.println("Type your response, then hit enter");
+//		System.out.println("What expression would you like me to evaluate?");
+//		String input = kb.nextLine();
+		
+	}
 
 	public static String[] parse(String string) {
 		int numThings = 1;
