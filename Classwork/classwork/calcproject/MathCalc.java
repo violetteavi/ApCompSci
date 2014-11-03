@@ -1,5 +1,7 @@
 package calcproject;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MathCalc {
@@ -12,7 +14,7 @@ public class MathCalc {
 			System.out.println("What expression would you like to evaluate?");
 			String input = kb.nextLine();
 			if(!input.equalsIgnoreCase("quit")) {
-				String[] parsedInput = parse(input);
+				List<String> parsedInput = parse(input);
 				String result = evaluate(parsedInput);
 				System.out.println(input + " is evaluated as " + result);
 			} else {
@@ -22,7 +24,7 @@ public class MathCalc {
 		
 	}
 
-	private static String evaluate(String[] parsedInput) {
+	private static String evaluate(List<String> parsedInput) {
 		String toReturn = "";
 		for(String str: parsedInput) {
 			toReturn += str + " ";
@@ -30,26 +32,18 @@ public class MathCalc {
 		return toReturn;
 	}
 
-	public static String[] parse(String string) {
-		int numThings = 1;
-		for(int i = 0; i < string.length(); i++) {
-			if(string.charAt(i) == ' ') {
-				numThings++;
-			}
-		}
-		String[] toReturn = new String[numThings];
-		for(int i = 0; i < toReturn.length; i++) {
-			toReturn[i] = "";
-		}
-		int slot = 0;
-		for(int i = 0; i < string.length(); i++) {
+	public static List<String> parse(String string) {
+		List<String> toReturn = new LinkedList<String>();
+		String temp = "";
+		for(int i = 0; i < string.length(); i++) {			
 			if(string.charAt(i) != ' ') {
-				toReturn[slot] += string.charAt(i);
+				temp += string.charAt(i);
 			} else {
-				slot++;
+				toReturn.add(temp);
+				temp = "";
 			}
 		}
-		
+		toReturn.add(temp); // no space at the end of the string, must store temp 		
 		return toReturn;
 	}
 
@@ -125,6 +119,20 @@ public class MathCalc {
 
 	public static double tan(double a) {
 		return Math.tan(a);
+	}
+
+	public static boolean isEqual(List<String> expected, List<String> received) {
+		if(expected==null||received==null) {
+			return expected==null&&received==null;
+		} else if(expected.size()!=received.size()) {
+			return false;
+		}
+		for(int i = 0; i < expected.size(); i++) {
+			if(!expected.get(i).equals(received.get(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

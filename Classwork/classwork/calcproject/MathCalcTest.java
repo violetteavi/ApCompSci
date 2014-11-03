@@ -2,31 +2,48 @@ package calcproject;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.LinkedList;
+
 import org.junit.Test;
 
 public class MathCalcTest {
 	
 	@Test
 	public void parse2OperandsTest() {
-		String[] expected = new String[3];
-		expected[0] = "5";
-		expected[1] = "+";
-		expected[2] = "7";
-		String[] recieved = MathCalc.parse("5 + 7");
-		for(int i = 0; i < expected.length; i++) {
-			assertEquals(expected[i], recieved[i]);
-		}
+		List<String> expected = new LinkedList<String>();
+		expected.add("5");
+		expected.add("+");
+		expected.add("7");
+		List<String> received = MathCalc.parse("5 + 7");
+		assertTrue(MathCalc.isEqual(expected, received));
 	}
 
 	@Test
 	public void parse1OperandTest() {
-		String[] expected = new String[2];
-		expected[0] = "|";
-		expected[1] = "-7";
-		String[] recieved = MathCalc.parse("| -7");
-		for(int i = 0; i < expected.length; i++) {
-			assertEquals(expected[i], recieved[i]);
-		}
+		List<String> expected = new LinkedList<String>();
+		expected.add("|");
+		expected.add("-7");
+		List<String> received = MathCalc.parse("| -7");
+		assertTrue(MathCalc.isEqual(expected, received));
+	}
+	
+	@Test
+	public void equalsTest() {
+		List<String> expected = new LinkedList<String>();
+		expected.add("5");
+		expected.add("+");
+		expected.add("7");
+		List<String> expectedClone = new LinkedList<String>();
+		expectedClone.add("5");
+		expectedClone.add("+");
+		expectedClone.add("7");
+		List<String> unexpected = new LinkedList<String>();
+		unexpected.add("5");
+		unexpected.add("-");
+		unexpected.add("7");
+		assertTrue(MathCalc.isEqual(expected, expectedClone));
+		assertFalse(MathCalc.isEqual(expected, unexpected));
 	}
 	
 	@Test
