@@ -5,11 +5,29 @@ import java.util.Scanner;
 public class MathCalc {
 	
 	public static void main(String[] args) {
-//		Scanner kb = new Scanner(System.in);
-//		System.out.println("Type your response, then hit enter");
-//		System.out.println("What expression would you like me to evaluate?");
-//		String input = kb.nextLine();
+		Scanner kb = new Scanner(System.in);
+		System.out.println("Type your response, then hit enter");
+		boolean done = false;
+		while(!done) {
+			System.out.println("What expression would you like to evaluate?");
+			String input = kb.nextLine();
+			if(!input.equalsIgnoreCase("quit")) {
+				String[] parsedInput = parse(input);
+				String result = evaluate(parsedInput);
+				System.out.println(input + " is evaluated as " + result);
+			} else {
+				done = true;
+			}
+		}
 		
+	}
+
+	private static String evaluate(String[] parsedInput) {
+		String toReturn = "";
+		for(String str: parsedInput) {
+			toReturn += str + " ";
+		}
+		return toReturn;
 	}
 
 	public static String[] parse(String string) {

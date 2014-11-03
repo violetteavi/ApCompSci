@@ -5,35 +5,29 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class MathCalcTest {
+	
+	@Test
+	public void parse2OperandsTest() {
+		String[] expected = new String[3];
+		expected[0] = "5";
+		expected[1] = "+";
+		expected[2] = "7";
+		String[] recieved = MathCalc.parse("5 + 7");
+		for(int i = 0; i < expected.length; i++) {
+			assertEquals(expected[i], recieved[i]);
+		}
+	}
 
 	@Test
-	public void test() {
-//		System.out.println(Double.valueOf("8.ab")); // Returns NumberFormatException
-		System.out.println(String.valueOf(MathCalc.add(5, MathCalc.sqrt(-7))));
+	public void parse1OperandTest() {
+		String[] expected = new String[2];
+		expected[0] = "|";
+		expected[1] = "-7";
+		String[] recieved = MathCalc.parse("| -7");
+		for(int i = 0; i < expected.length; i++) {
+			assertEquals(expected[i], recieved[i]);
+		}
 	}
-	
-//	@Test
-//	public void parse2OperandsTest() {
-//		String[] expected = new String[3];
-//		expected[0] = "5";
-//		expected[1] = "+";
-//		expected[2] = "7";
-//		String[] recieved = MathCalc.parse("5 + 7");
-//		for(int i = 0; i < expected.length; i++) {
-//			assertEquals(expected[i], recieved[i]);
-//		}
-//	}
-//
-//	@Test
-//	public void parse1OperandTest() {
-//		String[] expected = new String[2];
-//		expected[0] = "|";
-//		expected[1] = "-7";
-//		String[] recieved = MathCalc.parse("| -7");
-//		for(int i = 0; i < expected.length; i++) {
-//			assertEquals(expected[i], recieved[i]);
-//		}
-//	}
 	
 	@Test
 	public void isOperatorTest() {
@@ -131,5 +125,11 @@ public class MathCalcTest {
 		assertEquals(0, MathCalc.tan(0), 0.000001);
 		assertEquals(0, MathCalc.tan(Math.PI * 37), 0.000001);
 	}
+	
+//	@Test
+//	public void explorationOfEdgeTest() {
+//		System.out.println(Double.valueOf("8.ab")); // Returns NumberFormatException 
+//		System.out.println(String.valueOf(MathCalc.add(5, MathCalc.sqrt(-7)))); //returns NaN
+//	}
 	
 }
