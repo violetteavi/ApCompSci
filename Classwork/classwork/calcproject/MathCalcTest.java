@@ -8,6 +8,38 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 public class MathCalcTest {
+
+	@Test
+	public void evaluatesSimpleInput() {
+		List<String> input = new LinkedList<String>();
+		input.add("5");
+		input.add("+");
+		input.add("7");
+		assertTrue("12".equals(MathCalc.evaluate(input)));
+		List<String> input2 = new LinkedList<String>();
+		input2.add("|");
+		input2.add("-7");
+		assertTrue("7".equals(MathCalc.evaluate(input2)));
+	}
+	
+	@Test
+	public void calc1OperandTest() {
+		assertEquals(7.0, Double.valueOf(MathCalc.calcOneOperand("|", "-7")), 0.000001);
+		assertEquals(7.0, Double.valueOf(MathCalc.calcOneOperand("v", "49")), 0.000001);
+		assertEquals(7.0, Double.valueOf(MathCalc.calcOneOperand("~", "7.4")), 0.000001);
+		assertEquals(Math.sin(-7.0), Double.valueOf(MathCalc.calcOneOperand("s", "-7")), 0.000001);
+		assertEquals(Math.cos(-7.0), Double.valueOf(MathCalc.calcOneOperand("c", "-7")), 0.000001);
+		assertEquals(Math.tan(-7.0), Double.valueOf(MathCalc.calcOneOperand("t", "-7")), 0.000001);
+	}
+
+	@Test
+	public void calc2OperandTest() {
+		assertEquals(49.0, Double.valueOf(MathCalc.calcTwoOperands("^", "-7", "2")), 0.000001);
+		assertEquals(-14.0, Double.valueOf(MathCalc.calcTwoOperands("*", "-7", "2")), 0.000001);
+		assertEquals(-3.5, Double.valueOf(MathCalc.calcTwoOperands("/", "-7", "2")), 0.000001);
+		assertEquals(-5.0, Double.valueOf(MathCalc.calcTwoOperands("+", "-7", "2")), 0.000001);
+		assertEquals(-9.0, Double.valueOf(MathCalc.calcTwoOperands("-", "-7", "2")), 0.000001);
+	}
 	
 	@Test
 	public void parse2OperandsTest() {

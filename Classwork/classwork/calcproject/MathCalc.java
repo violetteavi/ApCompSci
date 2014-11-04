@@ -20,16 +20,98 @@ public class MathCalc {
 			} else {
 				done = true;
 			}
-		}
-		
+		}		
 	}
 
-	private static String evaluate(List<String> parsedInput) {
-		String toReturn = "";
-		for(String str: parsedInput) {
-			toReturn += str + " ";
+	public static String evaluate(List<String> parsedInput) {
+		String toReturn = null;
+		boolean done = false;
+		int priority = 4;
+		while(!done) {
+			for(int i = 0; i < parsedInput.size(); i++) {
+				String str = parsedInput.get(i);
+				if(isOperator(str)) {
+					switch(priority) {
+						case 4:	if(str.equals("|")||str.equals("v")||str.equals("~")||str.equals("s")||str.equals("c")||str.equals("t")) {
+									String operator = parsedInput.get(i);
+									String operand = parsedInput.get(i + 1);
+									parsedInput.remove(i);
+									parsedInput.remove(i);
+									parsedInput.add(i, calcOneOperand(operator, operand));
+								}
+							break;
+						case 3:  if(str.equals("^")) {
+									String operator = parsedInput.get(i);
+									String operand1 = parsedInput.get(i - 1);
+									String operand2 = parsedInput.get(i + 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+								}
+							break;
+						case 2:  if(str.equals("*")||str.equals("/")) {
+									String operator = parsedInput.get(i);
+									String operand1 = parsedInput.get(i - 1);
+									String operand2 = parsedInput.get(i + 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+								}
+							break;
+
+						case 1:  if(str.equals("+")||str.equals("-")) {
+									String operator = parsedInput.get(i);
+									String operand1 = parsedInput.get(i - 1);
+									String operand2 = parsedInput.get(i + 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.remove(i - 1);
+									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+								}
+							break;
+						case 0:  done = true;
+							break;
+					}
+				}
+			}
+			priority--;
 		}
 		return toReturn;
+	}
+
+	public static String calcOneOperand(String operator, String operand) {
+		if(operator.equals("|")) {
+			return String.valueOf(abs(Double.valueOf(operand)));
+		} else if(operator.equals("v")) {
+			return String.valueOf(sqrt(Double.valueOf(operand)));
+		} else if(operator.equals("~")) {
+			return String.valueOf(round(Double.valueOf(operand)));
+		} else if(operator.equals("s")) {
+			return String.valueOf(sin(Double.valueOf(operand)));
+		} else if(operator.equals("c")) {
+			return String.valueOf(cos(Double.valueOf(operand)));
+		} else if(operator.equals("t")) {
+			return String.valueOf(tan(Double.valueOf(operand)));
+		} else {
+			return null;
+		}
+	}
+
+	public static String calcTwoOperands(String operator, String operand1, String operand2) {
+		if(operator.equals("^")) {
+			return String.valueOf(pow(Double.valueOf(operand1),Double.valueOf(operand2)));
+		} else if(operator.equals("*")) {
+			return String.valueOf(multiply(Double.valueOf(operand1),Double.valueOf(operand2)));
+		} else if(operator.equals("/")) {
+			return String.valueOf(divide(Double.valueOf(operand1),Double.valueOf(operand2)));
+		} else if(operator.equals("+")) {
+			return String.valueOf(add(Double.valueOf(operand1),Double.valueOf(operand2)));
+		} else if(operator.equals("-")) {
+			return String.valueOf(subtract(Double.valueOf(operand1),Double.valueOf(operand2)));
+		}
+		return null;
 	}
 
 	public static List<String> parse(String string) {
