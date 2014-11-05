@@ -25,56 +25,70 @@ public class MathCalc {
 
 	public static String evaluate(List<String> parsedInput) {
 		String toReturn = null;
+		List<String> evaluatable = parsedInput;
 		boolean done = false;
-		int priority = 4;
+		int priority = 5;
 		while(!done) {
-			for(int i = 0; i < parsedInput.size(); i++) {
-				String str = parsedInput.get(i);
+			for(int i = 0; i < evaluatable.size(); i++) {
+				String str = evaluatable.get(i);
 				if(isOperator(str)) {
 					switch(priority) {
+						case 5:	if(str.equals("(")) {
+									List<String> subEquation = new LinkedList<String>();
+									evaluatable.remove(i);
+									while(!evaluatable.get(i).equals(")")) {
+										subEquation.add(evaluatable.get(i));
+										evaluatable.remove(i);
+									}
+									evaluatable.remove(i);
+									evaluatable.add(i, evaluate(subEquation));
+								}
+							break;
 						case 4:	if(str.equals("|")||str.equals("v")||str.equals("~")||str.equals("s")||str.equals("c")||str.equals("t")) {
-									String operator = parsedInput.get(i);
-									String operand = parsedInput.get(i + 1);
-									parsedInput.remove(i);
-									parsedInput.remove(i);
-									parsedInput.add(i, calcOneOperand(operator, operand));
+									String operator = evaluatable.get(i);
+									String operand = evaluatable.get(i + 1);
+									evaluatable.remove(i);
+									evaluatable.remove(i);
+									evaluatable.add(i, calcOneOperand(operator, operand));
 								}
 							break;
 						case 3:  if(str.equals("^")) {
-									String operator = parsedInput.get(i);
-									String operand1 = parsedInput.get(i - 1);
-									String operand2 = parsedInput.get(i + 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									String operator = evaluatable.get(i);
+									String operand1 = evaluatable.get(i - 1);
+									String operand2 = evaluatable.get(i + 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
 								}
 							break;
 						case 2:  if(str.equals("*")||str.equals("/")) {
-									String operator = parsedInput.get(i);
-									String operand1 = parsedInput.get(i - 1);
-									String operand2 = parsedInput.get(i + 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									String operator = evaluatable.get(i);
+									String operand1 = evaluatable.get(i - 1);
+									String operand2 = evaluatable.get(i + 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
 								}
 							break;
 
 						case 1:  if(str.equals("+")||str.equals("-")) {
-									String operator = parsedInput.get(i);
-									String operand1 = parsedInput.get(i - 1);
-									String operand2 = parsedInput.get(i + 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.remove(i - 1);
-									parsedInput.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									String operator = evaluatable.get(i);
+									String operand1 = evaluatable.get(i - 1);
+									String operand2 = evaluatable.get(i + 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.remove(i - 1);
+									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
 								}
-							break;
-						case 0:  done = true;
 							break;
 					}
 				}
+			}
+			if(priority==0) {
+				toReturn = evaluatable.get(0);
+				done = true;
 			}
 			priority--;
 		}
@@ -155,6 +169,10 @@ public class MathCalc {
 			return true;
 		} else if(string.equals("t")) {
 			return true;
+		} else if(string.equals("(")) {
+			return true;
+		} else if(string.equals(")")) {
+			return true;
 		}
 		return false;
 	}
@@ -215,6 +233,11 @@ public class MathCalc {
 			}
 		}
 		return true;
+	}
+
+	public static List<String> grabInsideParentheses(List<String> input, int startIndex) {
+		
+		return null;
 	}
 
 }

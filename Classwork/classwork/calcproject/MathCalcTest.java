@@ -8,18 +8,111 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 public class MathCalcTest {
+	
+	@Test
+	public void evaluatesParentheses() {
+		List<String> input = new LinkedList<String>();
+		input.add("(");
+		input.add("7");
+		input.add("+");
+		input.add("10");
+		input.add(")");
+		input.add("/");
+		input.add("2");
+		assertTrue("8.5".equals(MathCalc.evaluate(input)));
+	}
+	
+	@Test
+	public void grabsInsideParentheses() {
+		List<String> input = new LinkedList<String>();
+		input.add("(");
+		input.add("7");
+		input.add("+");
+		input.add("10");
+		input.add(")");
+		input.add("/");
+		input.add("2");
+		List<String> expected = new LinkedList<String>();
+		expected.add("7");
+		expected.add("+");
+		expected.add("10");	
+		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
+	}
+	
+	@Test
+	public void grabsInsideNestedParentheses() {
+		List<String> input = new LinkedList<String>();
+		input.add("(");
+		input.add("7");
+		input.add("+");
+		input.add("(");
+		input.add("10");
+		input.add("/");
+		input.add("2");
+		input.add(")");
+		input.add(")");
+		input.add("/");
+		input.add("2");
+		List<String> expected = new LinkedList<String>();
+		expected.add("7");
+		expected.add("+");
+		expected.add("(");
+		expected.add("10");
+		expected.add("/");
+		expected.add("2");
+		expected.add(")");
+		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
+	}
 
+	@Test
+	public void evaluatesOrderOfOps() {
+		List<String> input = new LinkedList<String>();
+		input.add("7");
+		input.add("+");
+		input.add("10");
+		input.add("/");
+		input.add("2");
+		assertTrue("12.0".equals(MathCalc.evaluate(input)));
+		List<String> input2 = new LinkedList<String>();
+		input2.add("15");
+		input2.add("+");
+		input2.add("-9");
+		input2.add("/");
+		input2.add("|");
+		input2.add("-3");
+		assertTrue("12.0".equals(MathCalc.evaluate(input2)));
+	}
+	
+	@Test
+	public void evaluatesMultipleOps() {
+		List<String> input = new LinkedList<String>();
+		input.add("10");
+		input.add("/");
+		input.add("2");
+		input.add("+");
+		input.add("7");
+		assertTrue("12.0".equals(MathCalc.evaluate(input)));
+		List<String> input2 = new LinkedList<String>();
+		input2.add("|");
+		input2.add("-9");
+		input2.add("/");
+		input2.add("-3");
+		input2.add("+");
+		input2.add("15");
+		assertTrue("12.0".equals(MathCalc.evaluate(input2)));
+	}
+	
 	@Test
 	public void evaluatesSimpleInput() {
 		List<String> input = new LinkedList<String>();
 		input.add("5");
 		input.add("+");
 		input.add("7");
-		assertTrue("12".equals(MathCalc.evaluate(input)));
+		assertTrue("12.0".equals(MathCalc.evaluate(input)));
 		List<String> input2 = new LinkedList<String>();
 		input2.add("|");
 		input2.add("-7");
-		assertTrue("7".equals(MathCalc.evaluate(input2)));
+		assertTrue("7.0".equals(MathCalc.evaluate(input2)));
 	}
 	
 	@Test
@@ -91,6 +184,8 @@ public class MathCalcTest {
 		assertTrue(MathCalc.isOperator("s"));
 		assertTrue(MathCalc.isOperator("c"));
 		assertTrue(MathCalc.isOperator("t"));
+		assertTrue(MathCalc.isOperator("("));
+		assertTrue(MathCalc.isOperator(")"));
 		assertFalse(MathCalc.isOperator(""));
 		assertFalse(MathCalc.isOperator("3"));
 		assertFalse(MathCalc.isOperator("-7"));
