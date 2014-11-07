@@ -19,29 +19,13 @@ public class MathCalcTest {
 		input.add(")");
 		input.add("/");
 		input.add("2");
-		assertTrue("8.5".equals(MathCalc.evaluate(input)));
+		String recieved = MathCalc.evaluate(input);
+		assertTrue("8.5".equals(recieved));
 	}
 	
 	@Test
-	public void grabsInsideParentheses() {
-		List<String> input = new LinkedList<String>();
-		input.add("(");
-		input.add("7");
-		input.add("+");
-		input.add("10");
-		input.add(")");
-		input.add("/");
-		input.add("2");
-		List<String> expected = new LinkedList<String>();
-		expected.add("7");
-		expected.add("+");
-		expected.add("10");	
-		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
-	}
-	
-	@Test
-	public void grabsInsideNestedParentheses() {
-		List<String> input = new LinkedList<String>();
+	public void evaluatesNestedParentheses() {
+	List<String> input = new LinkedList<String>();
 		input.add("(");
 		input.add("7");
 		input.add("+");
@@ -53,16 +37,51 @@ public class MathCalcTest {
 		input.add(")");
 		input.add("/");
 		input.add("2");
-		List<String> expected = new LinkedList<String>();
-		expected.add("7");
-		expected.add("+");
-		expected.add("(");
-		expected.add("10");
-		expected.add("/");
-		expected.add("2");
-		expected.add(")");
-		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
+		String recieved = MathCalc.evaluate(input);
+		assertTrue("6.0".equals(recieved));
 	}
+	
+//	@Test
+//	public void grabsInsideParentheses() {
+//		List<String> input = new LinkedList<String>();
+//		input.add("(");
+//		input.add("7");
+//		input.add("+");
+//		input.add("10");
+//		input.add(")");
+//		input.add("/");
+//		input.add("2");
+//		List<String> expected = new LinkedList<String>();
+//		expected.add("7");
+//		expected.add("+");
+//		expected.add("10");	
+//		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
+//	}
+//	
+//	@Test
+//	public void grabsInsideNestedParentheses() {
+//		List<String> input = new LinkedList<String>();
+//		input.add("(");
+//		input.add("7");
+//		input.add("+");
+//		input.add("(");
+//		input.add("10");
+//		input.add("/");
+//		input.add("2");
+//		input.add(")");
+//		input.add(")");
+//		input.add("/");
+//		input.add("2");
+//		List<String> expected = new LinkedList<String>();
+//		expected.add("7");
+//		expected.add("+");
+//		expected.add("(");
+//		expected.add("10");
+//		expected.add("/");
+//		expected.add("2");
+//		expected.add(")");
+//		assertTrue(expected.equals(MathCalc.grabInsideParentheses(input, 0)));
+//	}
 
 	@Test
 	public void evaluatesOrderOfOps() {

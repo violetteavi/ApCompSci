@@ -35,12 +35,18 @@ public class MathCalc {
 					switch(priority) {
 						case 5:	if(str.equals("(")) {
 									List<String> subEquation = new LinkedList<String>();
+									int numParen = 1;
 									evaluatable.remove(i);
-									while(!evaluatable.get(i).equals(")")) {
+									while(numParen!=0) {
+										if(evaluatable.get(i).equals("(")) {
+											numParen++;
+										} else if(evaluatable.get(i).equals(")")) {
+											numParen--;
+										}
 										subEquation.add(evaluatable.get(i));
 										evaluatable.remove(i);
 									}
-									evaluatable.remove(i);
+									subEquation.remove(subEquation.size() - 1); //last value is )
 									evaluatable.add(i, evaluate(subEquation));
 								}
 							break;
@@ -233,11 +239,6 @@ public class MathCalc {
 			}
 		}
 		return true;
-	}
-
-	public static List<String> grabInsideParentheses(List<String> input, int startIndex) {
-		
-		return null;
 	}
 
 }
