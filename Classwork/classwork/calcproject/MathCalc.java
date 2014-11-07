@@ -8,27 +8,26 @@ public class MathCalc {
 	
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
-		System.out.println("Type your response, then hit enter");
-		boolean done = false;
-		while(!done) {
-			System.out.println("What expression would you like to evaluate?");
-			String input = kb.nextLine();
-			if(!input.equalsIgnoreCase("quit")) {
+		System.out.println("Welcome to the AP Computer Science Calculator!\n");
+		String input;
+		do {
+			System.out.print("Enter an expression, or quit to exit: ");
+			input = kb.nextLine();
+			try {
 				List<String> parsedInput = parse(input);
 				String result = evaluate(parsedInput);
-				System.out.println(input + " is evaluated as " + result);
-			} else {
-				done = true;
+				System.out.println(input + " = " + result);
+			} catch (Exception e) {
+				System.out.println("Invalid expression. Try again, making sure to leave a space between operators and operands.");
 			}
-		}		
+		} while(!input.equalsIgnoreCase("quit"));
+		System.out.println("Thanks for stopping by!");
 	}
 
 	public static String evaluate(List<String> parsedInput) {
-		String toReturn = null;
 		List<String> evaluatable = parsedInput;
-		boolean done = false;
 		int priority = 5;
-		while(!done) {
+		while(priority!=0) {
 			for(int i = 0; i < evaluatable.size(); i++) {
 				String str = evaluatable.get(i);
 				if(isOperator(str)) {
@@ -46,7 +45,7 @@ public class MathCalc {
 										subEquation.add(evaluatable.get(i));
 										evaluatable.remove(i);
 									}
-									subEquation.remove(subEquation.size() - 1); //last value is )
+									subEquation.remove(subEquation.size() - 1); //last value is close parentheses
 									evaluatable.add(i, evaluate(subEquation));
 								}
 							break;
@@ -92,13 +91,10 @@ public class MathCalc {
 					}
 				}
 			}
-			if(priority==0) {
-				toReturn = evaluatable.get(0);
-				done = true;
-			}
 			priority--;
 		}
-		return toReturn;
+		Double.valueOf(evaluatable.get(0)); //throws an exception that can be caught up top.
+		return evaluatable.get(0);
 	}
 
 	public static String calcOneOperand(String operator, String operand) {

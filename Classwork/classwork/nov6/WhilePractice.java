@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class WhilePractice {
 	
 	public static void main(String[] args) {
-//		nPLoop();
+		nPLoop();
 		sumInputs();
 	}
 
