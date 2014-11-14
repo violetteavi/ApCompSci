@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class MathCalc {
 	
+	/*
+	 * Does basic operations, multiple operations, order of operations, erroneous input checking, and parentheses.
+	 */
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Welcome to the AP Computer Science Calculator!\n");
@@ -65,6 +68,7 @@ public class MathCalc {
 									evaluatable.remove(i - 1);
 									evaluatable.remove(i - 1);
 									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									i--;
 								}
 							break;
 						case 2:  if(str.equals("*")||str.equals("/")) {
@@ -75,6 +79,7 @@ public class MathCalc {
 									evaluatable.remove(i - 1);
 									evaluatable.remove(i - 1);
 									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									i--;
 								}
 							break;
 
@@ -86,6 +91,7 @@ public class MathCalc {
 									evaluatable.remove(i - 1);
 									evaluatable.remove(i - 1);
 									evaluatable.add(i - 1, calcTwoOperands(operator, operand1, operand2));
+									i--;
 								}
 							break;
 					}
@@ -203,8 +209,8 @@ public class MathCalc {
 		return Math.abs(a);
 	}
 
-	public static int round(double a) {
-		return (int) Math.round(a);
+	public static double round(double a) {
+		return (double) Math.round(a);
 	}
 
 	public static double sqrt(double a) {
