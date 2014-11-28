@@ -6,7 +6,8 @@ public class RubiksCalc {
 	
 	public static String gottaCalcEmAll() {
 		String toReturn;
-		BigInteger closest = BigInteger.valueOf(10).pow(100);
+		BigInteger closestDif = BigInteger.valueOf(10).pow(100);
+		BigInteger closestVal = BigInteger.valueOf(10).pow(100);
 		int closestBlankCorners = 0;
 		int closestBlankEdges = 0;
 		int closestCornerSet1 = 0;
@@ -21,7 +22,7 @@ public class RubiksCalc {
 		int closestEdgeSet6 = 0;
 		for(int i = 0; i <=8; i++) { //number of corners on a cube
 			for(int blankCorners = 0; blankCorners <= i; blankCorners++) {
-				for(int cornerSet1 = 0; (cornerSet1 <= 4) && (cornerSet1 + blankCorners <= i); cornerSet1++) {
+				for(int cornerSet1 = 0; (cornerSet1 <= 0) && (cornerSet1 + blankCorners <= i); cornerSet1++) {
 					for(int cornerSet2 = 0; (cornerSet2 <= cornerSet1) && (cornerSet1 + cornerSet2 + blankCorners <= i); cornerSet2++) {	
 						for(int cornerSet3 = 0; (cornerSet3 <= cornerSet2) && (cornerSet1 + cornerSet2 + cornerSet3 + blankCorners <= i); cornerSet3++) {	
 							for(int cornerSet4 = 0; (cornerSet4 <= cornerSet3) && (cornerSet1 + cornerSet2 + cornerSet3 + + cornerSet4 + blankCorners <= i); cornerSet4++) {	
@@ -36,8 +37,9 @@ public class RubiksCalc {
 																BigInteger val = RubiksCalc.calc3By3Combos(blankCorners, blankEdges, cornerSet1, cornerSet2, cornerSet3, cornerSet4, edgeSet1, edgeSet2, edgeSet3, edgeSet4, edgeSet5, edgeSet6);
 																double doubleVal = val.doubleValue();
 																BigInteger difference = val.subtract(BigInteger.valueOf(1000000)).abs();
-																if(difference.min(closest).equals(difference)) {
-																	closest = difference;
+																if(difference.min(closestDif).equals(difference)) {
+																	closestVal = val;
+																	closestDif = difference;
 																	closestBlankCorners = blankCorners;
 																	closestBlankEdges = blankEdges;
 																	closestCornerSet1 = cornerSet1;
@@ -77,7 +79,7 @@ public class RubiksCalc {
 					+ closestEdgeSet4 + " edges in set 4,\n"
 					+ closestEdgeSet5 + " edges in set 5,\n"
 					+ closestEdgeSet6 + " edges in set 6,\n"
-					+ "and "+ closest + " combinations total.";
+					+ "and "+ closestVal + " combinations total.";
 		return toReturn;
 	}
 	
@@ -102,17 +104,22 @@ public class RubiksCalc {
 	public static BigInteger calc3By3Combos(int blankCorners, int blankEdges, int cornerSet1, int cornerSet2, 
 							   int cornerSet3, int cornerSet4, int edgeSet1, int edgeSet2, 
 							   int edgeSet3, int edgeSet4, int edgeSet5, int edgeSet6) {
-		if(blankCorners==0) {
-			blankCorners = 1;
+		int orbits = 1;
+		if(blankCorners == 0) {
+			orbits *= 3; //divide by three automatically due to an extra orbit in the corners
 		}
-		if(blankEdges==0) {
-			blankEdges = 1;
+		if(blankCorners < 2 && cornerSet1 == 0) {
+			orbits *= 2; //divide by two automatically due to an extra orbit in the corners
 		}
-		BigInteger returnable = BigInteger.valueOf((long)Math.pow(3, 7)).multiply(BigInteger.valueOf((long)Math.pow(2, 10))
+		if(blankEdges == 0) {
+			orbits *= 2; //divide by two twice automatically due to an extra orbit in the edge
+		}
+		BigInteger returnable = BigInteger.valueOf((long)Math.pow(3, 8)).multiply(BigInteger.valueOf((long)Math.pow(2, 12))
 				).multiply(RubiksCalc.factorial(BigInteger.valueOf(12))).multiply(RubiksCalc.factorial(BigInteger.valueOf(8)));
-		long returbaleLong = returnable.longValue();
-		returnable = returnable.divide(BigInteger.valueOf((long) Math.pow(3, blankCorners - 1))
-				).divide(BigInteger.valueOf((long) Math.pow(2, blankEdges - 1))
+		double returbaleLong = returnable.doubleValue();
+		returnable = returnable.divide(BigInteger.valueOf((long) orbits)
+				).divide(BigInteger.valueOf((long) Math.pow(3, blankCorners))
+				).divide(BigInteger.valueOf((long) Math.pow(2, blankEdges))
 				).divide(RubiksCalc.factorial(BigInteger.valueOf((long) blankEdges))
 				).divide(RubiksCalc.factorial(BigInteger.valueOf((long) blankCorners))
 				).divide(RubiksCalc.factorial(BigInteger.valueOf((long) cornerSet1))

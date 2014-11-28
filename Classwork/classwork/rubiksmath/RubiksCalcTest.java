@@ -17,12 +17,15 @@ public class RubiksCalcTest {
 //		System.out.println(Math.log(Float.MAX_VALUE)/Math.log(10)); // returns 38.5
 //		System.out.println(Math.log(Integer.MAX_VALUE)/Math.log(10)); // returns 9.3
 //		System.out.println((long) Math.pow(3, 7)); // no interference
-		BigInteger thing = BigInteger.valueOf((long)Math.pow(3, 7)).multiply(BigInteger.valueOf((long)Math.pow(2, 10))
-				).multiply(RubiksCalc.factorial(BigInteger.valueOf(12))).multiply(RubiksCalc.factorial(BigInteger.valueOf(8))).divide(BigInteger.valueOf((long) Math.pow(3, 8 - 1))
+		BigInteger thing = BigInteger.valueOf((long)Math.pow(3, 7)
+						).multiply(BigInteger.valueOf((long)Math.pow(2, 11))
+						).multiply(RubiksCalc.factorial(BigInteger.valueOf(12))
+						).multiply(RubiksCalc.factorial(BigInteger.valueOf(8))
+						).divide(BigInteger.valueOf((long) Math.pow(3, 7))
 						).divide(BigInteger.valueOf((long) Math.pow(2, 12 - 1))
-								).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 12))
-								).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 8)));
-//		System.out.println(thing.longValue());
+						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 12))
+						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 8)));
+		System.out.println(thing.longValue());
 	}
 	
 	@Test
