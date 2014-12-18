@@ -22,7 +22,7 @@ public class RubiksCalc {
 		int closestEdgeSet6 = 0;
 		for(int i = 0; i <=8; i++) { //number of corners on a cube
 			for(int blankCorners = 0; blankCorners <= i; blankCorners++) {
-				for(int cornerSet1 = 0; (cornerSet1 <= 0) && (cornerSet1 + blankCorners <= i); cornerSet1++) {
+				for(int cornerSet1 = 0; (cornerSet1 <= 4) && (cornerSet1 + blankCorners <= i); cornerSet1++) {
 					for(int cornerSet2 = 0; (cornerSet2 <= cornerSet1) && (cornerSet1 + cornerSet2 + blankCorners <= i); cornerSet2++) {	
 						for(int cornerSet3 = 0; (cornerSet3 <= cornerSet2) && (cornerSet1 + cornerSet2 + cornerSet3 + blankCorners <= i); cornerSet3++) {	
 							for(int cornerSet4 = 0; (cornerSet4 <= cornerSet3) && (cornerSet1 + cornerSet2 + cornerSet3 + + cornerSet4 + blankCorners <= i); cornerSet4++) {	

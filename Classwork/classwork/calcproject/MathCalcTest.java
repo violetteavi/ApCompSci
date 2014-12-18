@@ -258,10 +258,10 @@ public class MathCalcTest {
 
 	@Test
 	public void roundTest() {
-		assertEquals(2, MathCalc.round(2));
-		assertEquals(2, MathCalc.round(2.49));
-		assertEquals(2, MathCalc.round(1.5));
-		assertEquals(-6, MathCalc.round(-6.23));
+		assertEquals(2, MathCalc.round(2), 0.00001);
+		assertEquals(2, MathCalc.round(2.49), 0.00001);
+		assertEquals(2, MathCalc.round(1.5), 0.00001);
+		assertEquals(-6, MathCalc.round(-6.23), 0.00001);
 		assertEquals(-7, MathCalc.round(-6.73), 0.000001);
 	}
 
