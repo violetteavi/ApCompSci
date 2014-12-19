@@ -2,7 +2,7 @@ package rubiksmath;
 
 import java.math.BigInteger;
 
-public class RubiksCalc {
+public class RubiksCalc2 {
 	
 	public static String gottaCalcEmAll(long target) {
 		String toReturn;

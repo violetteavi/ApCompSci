@@ -39,7 +39,7 @@ public class Dico {
 				inputStream.close();
 			}
 		}
-		return input;
+//		return input;
 	}
 	
 	public static String playGames(String[][] inputs) {

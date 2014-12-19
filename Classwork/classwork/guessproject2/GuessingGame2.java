@@ -23,7 +23,7 @@ public class GuessingGame2 {
 			System.out.println("Would you like to play again? (yes/no)");
 			wantsToPlay = kb.nextLine();
 		} while(wantsToPlay.equalsIgnoreCase("yes"));
-		System.out.println("You played " + totalGames + " games with an average of " + totalGuesses / totalGames + " guesses each.");
+		System.out.println("You played " + totalGames + " games with an average of " + (double) totalGuesses / totalGames + " guesses each.");
 		System.out.println("Your best score was " + lowestGuesses + " guesses.");
 		System.out.println("Thanks for playing!");
 	}

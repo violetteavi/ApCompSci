@@ -17,21 +17,20 @@ public class RubiksCalcTest {
 //		System.out.println(Math.log(Float.MAX_VALUE)/Math.log(10)); // returns 38.5
 //		System.out.println(Math.log(Integer.MAX_VALUE)/Math.log(10)); // returns 9.3
 //		System.out.println((long) Math.pow(3, 7)); // no interference
-//		BigInteger blankCube = BigInteger.valueOf((long)Math.pow(3, 7)
-//						).multiply(BigInteger.valueOf((long)Math.pow(2, 11))
-//						).multiply(RubiksCalc.factorial(BigInteger.valueOf(12))
-//						).multiply(RubiksCalc.factorial(BigInteger.valueOf(8))
-//						).divide(BigInteger.valueOf((long) Math.pow(3, 7))
-//						).divide(BigInteger.valueOf((long) Math.pow(2, 12 - 1))
-//						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 12))
-//						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 8)));
-//		System.out.println(blankCube.longValue());
+		BigInteger thing = BigInteger.valueOf((long)Math.pow(3, 7)
+						).multiply(BigInteger.valueOf((long)Math.pow(2, 11))
+						).multiply(RubiksCalc.factorial(BigInteger.valueOf(12))
+						).multiply(RubiksCalc.factorial(BigInteger.valueOf(8))
+						).divide(BigInteger.valueOf((long) Math.pow(3, 7))
+						).divide(BigInteger.valueOf((long) Math.pow(2, 12 - 1))
+						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 12))
+						).divide(RubiksCalc.factorial(BigInteger.valueOf((long) 8)));
+		System.out.println(thing.longValue());
 	}
 	
 	@Test
 	public void counterTest() {
-//		RubiksCalc.gottaCalcEmAll();
-		System.out.println(RubiksCalc.gottaCalcEmAll(1000000));
+		System.out.println(RubiksCalc.gottaCalcEmAll());
 	}
 	
 //	@Test
@@ -71,12 +70,6 @@ public class RubiksCalcTest {
 		BigInteger recieved = RubiksCalc.calc3By3Combos(8, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		double recieveddouble = recieved.doubleValue();
 		assertTrue(expected.equals(recieved));
-	}
-	
-	@Test
-	public void calc3By3CombosMillionCubeTest() {
-		System.out.println(RubiksCalc.calc3By3Combos(0, 12, 4, 2, 2, 0, 0, 0, 0, 0, 0, 0).doubleValue());
-		//Fails-- this should yield 3674160 but yields 44089920
 	}
 
 }
