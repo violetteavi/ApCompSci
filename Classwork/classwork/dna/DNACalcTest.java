@@ -1,4 +1,4 @@
-package dna2;
+package dna;
 
 import static org.junit.Assert.*;
 
