@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class DNACalc {
 	
-	//C:\Users\family\Documents\Andrew's Stories\School\12th Grade\Comp Sci\DNA samples\dna.txt
-	//C:\Users\family\Documents\Andrew's Stories\School\12th Grade\Comp Sci\DNA samples\dnaOutput.txt
+	//S:\12\CS\dna.txt
+	//S:\12\CS\dnaOutput.txt
 	
 	public static final int A = 0;
 	public static final int C = 1;
