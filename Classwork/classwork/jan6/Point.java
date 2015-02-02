@@ -2,7 +2,13 @@ package jan6;
 
 public class Point {
 
+	private static final int X = 0;
+	private static final int Y = 1;
+	private static final int RADIUS = 2;
+	private static final int THETA = 3;
 	private double x, y, r, theta;
+	
+	//constructors
 	
 	public Point(double x, double y) {
 		this.x = x;
@@ -18,6 +24,8 @@ public class Point {
 		this.x = r * Math.cos(theta);
 		this.y = r * Math.sin(theta);
 	}
+	
+	//static calculations
 	
 	public static double slope(Point p1, Point p2) {
 		return (p1.getY() - p2.getY())/ (p1.getX()-p2.getX()); 
@@ -35,6 +43,60 @@ public class Point {
 		return p1.getX()==p2.getX()&&p1.getY()==p2.getY();
 	}
 	
+	public static double distanceFromCenter(Point p) {
+		return distance(p, new Point(0,0));
+	}
+	
+	public int quadrant(Point p) {
+		if(p.getX()>=0) {
+			if(p.getY()>=0) {
+				return 1;
+			} else {
+				return 4;
+			}
+		} else {
+			if(p.getY()>=0) {
+				return 2;
+			} else {
+				return 3;
+			}
+		}
+	}
+	
+	public String toString(Point p) {
+		return "(" + p.getX() + "," + ")";
+	}
+	
+	//OO methods
+	
+	public double slopeTo(Point other) {
+		return slope(this, other);
+	}
+	
+	public Point midPointTo(Point other) {
+		return midPoint(this, other);
+	}
+	
+	public double distanceTo(Point other) {
+		return distance(this, other);
+	}
+	
+	public boolean equals(Point other) {
+		return equals(this, other);
+	}
+	
+	public double distanceFromCenter() {
+		return distanceFromCenter(this);
+	}
+	
+	public int quadrant() {
+		return quadrant(this);
+	}
+	
+	public String toString() {
+		return toString(this);
+	}
+	
 	// getters and setters
 	
 	public double getX() {
@@ -43,6 +105,7 @@ public class Point {
 
 	public void setX(double x) {
 		this.x = x;
+		this.update(X);
 	}
 
 	public double getY() {
@@ -51,6 +114,7 @@ public class Point {
 
 	public void setY(double y) {
 		this.y = y;
+		this.update(Y);
 	}
 
 	public double getR() {
@@ -59,6 +123,7 @@ public class Point {
 
 	public void setR(double r) {
 		this.r = r;
+		this.update(RADIUS);
 	}
 
 	public double getTheta() {
@@ -67,6 +132,23 @@ public class Point {
 
 	public void setTheta(double theta) {
 		this.theta = theta;
+		this.update(THETA);
+	}
+
+	private void update(int change) {
+		switch(change) {
+		case Y:
+		case X: 
+			this.r = Math.sqrt(x*x + y*y);
+			this.theta = Math.atan2(y, x);
+			break;
+		case RADIUS:
+		case THETA:
+			this.x = r * Math.cos(theta);
+			this.y = r * Math.sin(theta);
+			break;
+		}
+		
 	}
 
 

@@ -28,6 +28,7 @@ public class DNACalc {
 	public static final double MASSJUNK = 100;
 	
 	private static final int CODONLENGTH = 3;
+	private static final double MINCGCOMPOSITION = 30;
 
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
@@ -83,7 +84,7 @@ public class DNACalc {
 	}
 
 	private static String isProtein(String[] codons, double[] composition) {
-		if(!(composition[C] + composition[G] >= 30)) {
+		if(!(composition[C] + composition[G] >= MINCGCOMPOSITION)) {
 			return "NO";
 		}
 		if(!(codons.length >= 5)) {
