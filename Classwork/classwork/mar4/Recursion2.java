@@ -25,9 +25,33 @@ public class Recursion2 {
 		if(arr[index]%2==0) {
 			partialSum += arr[index];
 		}
-		return partialSum + sumRec(index + 1, arr);
+		return partialSum + sumRecEven(index + 1, arr);
 	}
 	
+	public static int fib(int n) {
+		if(n <= 0) {
+			return 0;
+		}
+		int cur = 1;
+		int prev = 0;
+		while(n > 1) {
+			int tempCur = cur + prev;
+			prev = cur;
+			cur = tempCur;
+			n--;
+		}
+		return cur;
+	}
 	
+	public static int fibRec(int n, int cur, int prev) {
+		if(n < 1) {
+			return cur;
+		}
+		return fibRec(n-1, cur + prev, cur);
+	}
+
+	public static int fibRec(int n) {
+		return fibRec(n - 1, 1, 0);
+	}
 	
 }

@@ -20,4 +20,19 @@ public class Recursion2Test {
 		assertEquals(10, Recursion2.sumEven(arr));
 		assertEquals(0, Recursion2.sumEven(null));
 	}
+	
+	@Test
+	public void fibRecTest() {
+		assertEquals(5, Recursion2.fibRec(5));
+		assertEquals(13, Recursion2.fibRec(7));
+		assertEquals(0, Recursion2.fibRec(0));
+	}
+	
+	@Test
+	public void fibTest() {
+		assertEquals(5, Recursion2.fib(5));
+		assertEquals(13, Recursion2.fib(7));
+		assertEquals(0, Recursion2.fib(0));
+	}
+	
 }
