@@ -67,7 +67,7 @@ public class SongCollection {
 			int imax = i;
 			int maxYear = songs.get(i).getYear();
 			for(int j = i + 1; j < songs.size(); j++) {
-				if(songs.get(j).getYear()>maxYear) {
+				if(songs.get(j).getYear()<maxYear) {
 					imax = j;
 					maxYear = songs.get(j).getYear();
 				}
@@ -81,7 +81,7 @@ public class SongCollection {
 			int imax = i;
 			int maxRank = songs.get(i).getRank();
 			for(int j = i + 1; j < songs.size(); j++) {
-				if(songs.get(j).getRank()>maxRank) {
+				if(songs.get(j).getRank()<maxRank) {
 					imax = j;
 					maxRank = songs.get(j).getRank();
 				}
@@ -99,34 +99,64 @@ public class SongCollection {
 		String[] commands = operations.split(" ");
 		for(String command: commands) {
 			String[] divided = command.split(":");
-			if(divided[0].equals("-year")) {
+			if(divided[0].toLowerCase().contains("year")) {
 				Range toFilter = Range.parse(divided[1]);
 				this.filterYear(toFilter);
 			}
-			if(divided[0].equals("-rank")) {
+			if(divided[0].toLowerCase().contains("rank")) {
 				Range toFilter = Range.parse(divided[1]);
 				this.filterRank(toFilter);
 			}
-			if(divided[0].equals("-artist")) {
+			if(divided[0].toLowerCase().contains("artist")) {
 				this.filterArtist(divided[1]);
 			}		
-			if(divided[0].equals("-title")) {
+			if(divided[0].toLowerCase().contains("title")) {
 				this.filterTitle(divided[1]);
 			}
-			if(divided[0].equals("-sort")) {
-				if(divided[1].equals("year")) {
+			if(divided[0].toLowerCase().contains("sort")) {
+				if(divided[1].toLowerCase().contains("year")) {
 					this.sortYear();
 				}
-				if(divided[1].equals("rank")) {
+				if(divided[1].toLowerCase().contains("rank")) {
 					this.sortRank();
 				}
-//				if(divided[1].equals("artist")) {
-//					this.sortArtist();
-//				}
-//				if(divided[1].equals("title")) {
-//					this.sortTitle();
-//				}
+				if(divided[1].equals("artist")) {
+					this.sortArtist();
+				}
+				if(divided[1].equals("title")) {
+					this.sortTitle();
+				}
 			}
 		}
 	}
+
+	private void sortTitle() {
+		for(int i = 0; i < songs.size(); i++) {
+			int imax = i;
+			String maxTitle = songs.get(i).getTitle();
+			for(int j = i + 1; j < songs.size(); j++) {
+				if(songs.get(j).getTitle().compareToIgnoreCase(maxTitle) < 0) {
+					imax = j;
+					maxTitle = songs.get(j).getTitle();
+				}
+			}
+			insert(i, imax);
+		}
+	}
+
+	private void sortArtist() {
+		for(int i = 0; i < songs.size(); i++) {
+			int imax = i;
+			String maxArtist = songs.get(i).getArtist();
+			for(int j = i + 1; j < songs.size(); j++) {
+				if(songs.get(j).getArtist().compareToIgnoreCase(maxArtist) < 0) {
+					imax = j;
+					maxArtist = songs.get(j).getArtist();
+				}
+			}
+			insert(i, imax);
+		}
+	}
+	
+
 }
