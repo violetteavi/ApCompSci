@@ -1,4 +1,4 @@
-package dna;
+package projects.dna;
 
 import static org.junit.Assert.*;
 

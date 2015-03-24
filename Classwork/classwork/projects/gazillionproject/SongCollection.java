@@ -1,4 +1,4 @@
-package gazillionproject;
+package projects.gazillionproject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package calcproject;
+package projects.calcproject;
 
 import static org.junit.Assert.*;
 

@@ -1,4 +1,4 @@
-package guessproject2;
+package projects.guessproject2;
 
 import static org.junit.Assert.*;
 

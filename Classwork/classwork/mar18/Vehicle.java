@@ -2,11 +2,19 @@ package mar18;
 
 public class Vehicle {
 	
+	private String name;
+
+	public Vehicle(String name) {
+		this.name = name;
+	}
+	
 	private int milesDriven = 0;
 	private int passengers;
 	
 	public String getType() {
-		return this.getClass().toString();
+		String[] noClass = this.getClass().toString().split(" ");
+		String[] noPackage = noClass[noClass.length - 1].split("\\.");
+		return noPackage[noPackage.length - 1];
 	}
 	
 	public void drive(int miles) {

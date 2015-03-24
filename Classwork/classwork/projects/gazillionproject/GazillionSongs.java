@@ -1,4 +1,4 @@
-package gazillionproject;
+package projects.gazillionproject;
 
 import java.io.BufferedWriter;
 import java.io.File;

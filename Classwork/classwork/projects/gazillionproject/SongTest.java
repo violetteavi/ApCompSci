@@ -1,4 +1,4 @@
-package gazillionproject;
+package projects.gazillionproject;
 
 import static org.junit.Assert.*;
 

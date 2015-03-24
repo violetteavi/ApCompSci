@@ -1,4 +1,4 @@
-package dna;
+package projects.dna;
 
 import java.io.BufferedWriter;
 import java.io.File;
