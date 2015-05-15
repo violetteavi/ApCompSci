@@ -28,6 +28,8 @@ public class Exploration {
 			sword.hitPlayer(p2);
 		}
 		
+//		ObnoxiousSword sw = new Weapon(); not legal
+		
 	}
 
 }
