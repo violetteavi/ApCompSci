@@ -12,10 +12,11 @@ public class FirstShip extends BasicSpaceship{
 	private List<ShipCommand> commandQueue;
 	private Point startLocation;
 	private Point center;
+	private double timeThrusted;
 	public static final double distanceTolerance = 1/100;
 	
 	public static void main(String[] args) {
-		TextClient.run("10.1.17.118", new FirstShip());
+		TextClient.run("10.1.24.246", new FirstShip());
 	}
 	
 	@Override
@@ -51,26 +52,31 @@ public class FirstShip extends BasicSpaceship{
 //	}
 	
 	private void moveToPoint(Point point, BasicEnvironment arg0) {
-		System.out.println("Attempting to move");
 		if(arg0.getShipStatus().getSpeed()<.1&&arg0.getShipStatus().getPosition().getDistanceTo(center)>center.getX()*distanceTolerance) {
 			startLocation = arg0.getShipStatus().getPosition();
+			timeThrusted = 0;
 			if(Math.abs(arg0.getShipStatus().getPosition().getAngleTo(center) - arg0.getShipStatus().getOrientation())%360 > 5 ) {
 				commandQueue.add(new RotateCommand(arg0.getShipStatus().getPosition().getAngleTo(center) - arg0.getShipStatus().getOrientation()));
 				commandQueue.add(new IdleCommand(3));
 			}
 		}
 		if(Math.abs(arg0.getShipStatus().getPosition().getAngleTo(center) - arg0.getShipStatus().getOrientation())%360 < 10) {
-			if(arg0.getShipStatus().getPosition().getDistanceTo(center)>startLocation.getDistanceTo(center)/1.9) {
-				commandQueue.add(new ThrustCommand('B', 1, 1.0));
-				commandQueue.add(new IdleCommand(1));
-				System.out.println("Moving");
+			if(arg0.getShipStatus().getPosition().getDistanceTo(center)>startLocation.getDistanceTo(center)/2) {
+				commandQueue.add(new ThrustCommand('B', .5, 1.0));
+				commandQueue.add(new IdleCommand(.5));
+				timeThrusted += .5;
 			}
-			if(arg0.getShipStatus().getPosition().getDistanceTo(center)<startLocation.getDistanceTo(center)/1.9) {
-				System.out.println("Decelerating");
+			if(arg0.getShipStatus().getPosition().getDistanceTo(center)<startLocation.getDistanceTo(center)/2&&arg0.getShipStatus().getSpeed()>.001) {
+				commandQueue.add(new ThrustCommand('F', timeThrusted, 1.0));
+				commandQueue.add(new IdleCommand(timeThrusted));
+			}
+			if(arg0.getShipStatus().getSpeed()<.1&&arg0.getShipStatus().getPosition().getDistanceTo(center)<center.getX()*distanceTolerance) {
+				System.out.println("Braking");
 				commandQueue.add(new BrakeCommand(0));
-				commandQueue.add(new IdleCommand(5));
+				commandQueue.add(new IdleCommand(3));
 			}
 		}
+		
 	}
 
 //	private void moveToPoint(Point point, Environment arg0) {
