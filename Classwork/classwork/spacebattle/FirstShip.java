@@ -21,16 +21,8 @@ public class FirstShip extends BasicSpaceship{
 	
 	@Override
 	public ShipCommand getNextCommand(BasicEnvironment arg0) {
-//		if(degreesToCenter()!=0) {
-//			if(arg0.getShipStatus().getSpeed()!=0) {
-//				return new BrakeCommand(0);
-//			} else if(arg0.getShipStatus().getRotationSpeed()!=0){
-//				return new RotateCommand(degreesToCenter());
-//			}
-//		}
 		if(commandQueue.size()==0){
 			moveToPoint(center, arg0);
-//			thrust(85);
 		}
 		if(commandQueue.size()>0) {
 			return commandQueue.remove(0);
@@ -171,11 +163,6 @@ public void thrust(double d) {
 		return new RegistrationData("Yo dawg I heard you like strs", Color.WHITE, 1);
 	}
 
-	@Override
-	public void shipDestroyed() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	
 }

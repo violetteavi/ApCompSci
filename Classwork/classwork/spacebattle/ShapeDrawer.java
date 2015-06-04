@@ -17,15 +17,15 @@ public class ShapeDrawer extends BasicSpaceship{
 	public static final double distanceTolerance = 1/100;
 
 	public static void main(String[] args) {
-		TextClient.run("10.1.24.246", new ShapeDrawer());
+		TextClient.run("10.1.17.158", new ShapeDrawer());
 	}
 	
 	@Override
 	public ShipCommand getNextCommand(BasicEnvironment arg0) {
 		if(commandQueue.size()==0){
-//				drawSquare(true);
+				drawSquare(true);
 				drawStar(true);
-//				drawOctosquare(true);
+				drawOctosquare(true);
 		}
 		if(commandQueue.size()>0) {
 			return commandQueue.remove(0);
@@ -125,11 +125,6 @@ public class ShapeDrawer extends BasicSpaceship{
 		commandQueue = new LinkedList<ShipCommand>();
 //		center = new Point(worldWidth/2, worldHeight/2);
 		return new RegistrationData("Yo d0g I heard you like strs", Color.WHITE, 1);
-	}
-
-	@Override
-	public void shipDestroyed() {
-		
 	}
 
 }

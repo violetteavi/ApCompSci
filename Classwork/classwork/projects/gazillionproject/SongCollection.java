@@ -46,10 +46,10 @@ public class SongCollection {
 	
 	public void filterArtist(String s) {
 		for(int i = 0; i < songs.size(); i++) {
-//			if(!songs.get(i).getArtist().toLowerCase().contains(s)) {
-//				songs.remove(i);
-//				i--;
-//			}
+			if(!songs.get(i).getArtist().toLowerCase().contains(s)) {
+				songs.remove(i);
+				i--;
+			}
 		}
 	}
 	
