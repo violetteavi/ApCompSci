@@ -18,13 +18,14 @@ public class RandomWalkerShip implements Spaceship<DiscoveryQuestGameInfo>{
 	private int justStarted = 2;
 	private int steeredDirection = 1;
 	private int numThrusts = 0;
+	private int scanCounter = 0;
 	private static final double fracMaxSpeed = 2/3;
 	private static final double distanceTolerance = 1/50;
 	private static final double minSpeed = .1;
 	private static final int maxNumThrusts = 12;
 
 	public static void main(String[] args) {
-		TextClient.run("10.1.17.158", new RandomWalkerShip());
+		TextClient.run("10.1.24.254", new RandomWalkerShip());
 	}
 	
 	@Override
@@ -47,6 +48,7 @@ public class RandomWalkerShip implements Spaceship<DiscoveryQuestGameInfo>{
 			commandQueue.add(new RadarCommand(2));
 		}
 		if(commandQueue.size()>0) {
+			System.out.println(commandQueue.get(0).getClass().toString());
 			return commandQueue.remove(0);
 		}
 		System.out.println("Idling");
@@ -57,15 +59,31 @@ public class RandomWalkerShip implements Spaceship<DiscoveryQuestGameInfo>{
 		List<ObjectStatus> statuses = arg0.getRadar();
 		for(ObjectStatus status: statuses) {
 			if(status.getPosition().getDistanceTo(arg0.getShipStatus().getPosition())<150) {
-				if(!scannedIDs.contains(status.getId())) {
+				if(scannable(status.getId(), arg0)) {
 					commandQueue.add(new ScanCommand(status.getId()));
 					scannedIDs.add(status.getId());
-					if(!isBraking()) {
-						commandQueue.add(new BrakeCommand(0));
-					}
+//					if(!isBraking()) {
+//						commandQueue.add(new BrakeCommand(0));
+//					}
 				}
 			}
-		}		
+		}
+	}
+
+	private boolean scannable(int id, Environment<DiscoveryQuestGameInfo> arg0) {
+		int[] scanned = arg0.getGameInfo().getLastSuccessfulIds();
+		int[] inProgress = arg0.getGameInfo().getScanIdsInProgress();
+		for(int i = 0; i < scanned.length; i++) {
+			if(scanned[i]==id) {
+				return false;
+			}
+		}
+		for(int i = 0; i < inProgress.length; i++) {
+			if(inProgress[i]==id) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean isBraking() {
@@ -77,13 +95,33 @@ public class RandomWalkerShip implements Spaceship<DiscoveryQuestGameInfo>{
 		return false;
 	}
 
-	private void randomWalk(Environment<DiscoveryQuestGameInfo> arg0) {		
-		commandQueue.add(new ThrustCommand('B', 2, 1.0));
-		numThrusts++;
+	private void randomWalk(Environment<DiscoveryQuestGameInfo> arg0) {	
+		System.out.println("Walking " + arg0.getShipStatus().getSpeed());
+//		if(arg0.getShipStatus().getSpeed() < arg0.getShipStatus().getMaxSpeed()*fracMaxSpeed) {
+			System.out.println("Thrusting");
+			commandQueue.add(new ThrustCommand('B', 2, 1.0));
+//		}
 		double rotation = steeredDirection*Math.random()*180;
 		commandQueue.add(new RotateCommand(rotation));
 		commandQueue.add(new SteerCommand(rotation));
 		steeredDirection*=-1;
+		if(isInPlanet(arg0)) {
+			commandQueue.add(new WarpCommand(200));
+		}
+	}
+
+	private boolean isInPlanet(Environment<DiscoveryQuestGameInfo> arg0) {
+		if(arg0.getRadar().getByType("Planet")!=null) {
+			return false;
+		}
+		List<ObjectStatus> planets = arg0.getRadar().getByType("Planet");
+		for(ObjectStatus planet: planets) {
+			if(planet.getPosition().getDistanceTo(arg0.getShipStatus().getPosition()) < 
+					planet.getAxisMajorLength() / 2 + arg0.getShipStatus().getAxisMajorLength()/ 2 + 50) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
