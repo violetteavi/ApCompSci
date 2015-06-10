@@ -10,25 +10,19 @@ import ihs.apcs.spacebattle.games.*;
 
 public class MissionShip implements Spaceship<DiscoveryQuestGameInfo>{
 	private List<ShipCommand> commandQueue;
-	private List<Integer> scannedIDs;
-	private Point startLocation;
-	private Point center;
-	private double timeThrusted;
-	private boolean oriented = false;
+	private List<Integer> seenIDs;
+	private List<Integer> actuallyScannedIDs;
 	private int justStarted = 2;
 	private int steeredDirection = 1;
 	private int numThrusts = 0;
-	private static final double fracMaxSpeed = 2/3;
-	private static final double distanceTolerance = 1/50;
-	private static final double minSpeed = .1;
-	private static final int maxNumThrusts = 12;
 
 	public static void main(String[] args) {
-		TextClient.run("10.1.17.158", new MissionShip());
+		TextClient.run("10.1.24.254", new MissionShip());
 	}
 	
 	@Override
 	public ShipCommand getNextCommand(Environment<DiscoveryQuestGameInfo> arg0) {
+		updateIDs(arg0);
 		if(commandQueue.size()==0){
 			if(arg0.getShipStatus().getEnergy()<5) {
 				commandQueue.add(new IdleCommand(20));
@@ -53,19 +47,42 @@ public class MissionShip implements Spaceship<DiscoveryQuestGameInfo>{
 		return new IdleCommand(1);
 	}
 
+	private void updateIDs(Environment<DiscoveryQuestGameInfo> arg0) {
+		for(Integer id: arg0.getGameInfo().getLastSuccessfulIds()) {
+			actuallyScannedIDs.add(id);
+		}
+		System.out.println("Seen: " + seenIDs.size()+ " Actually scanned: " + actuallyScannedIDs.size());
+		
+	}
+
 	private void scanThings(Environment<DiscoveryQuestGameInfo> arg0) {
 		List<ObjectStatus> statuses = arg0.getRadar();
 		for(ObjectStatus status: statuses) {
 			if(status.getPosition().getDistanceTo(arg0.getShipStatus().getPosition())<150) {
-				if(!scannedIDs.contains(status.getId())) {
+//				if(!scannedIDs.contains(status.getId())) {
+				if(scannable(status.getId(), arg0)) {
 					commandQueue.add(new ScanCommand(status.getId()));
-					scannedIDs.add(status.getId());
+					seenIDs.add(status.getId());
 					if(!isBraking()) {
 						commandQueue.add(new BrakeCommand(0));
 					}
 				}
 			}
 		}		
+	}
+
+	private boolean scannable(int id, Environment<DiscoveryQuestGameInfo> arg0) {
+		for(Integer scanned: actuallyScannedIDs) {
+			if(scanned==id) {
+				return false;
+			}
+		}
+		for(Integer scanning: arg0.getGameInfo().getScanIdsInProgress()) {
+			if(scanning==id) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean isBraking() {
@@ -88,9 +105,9 @@ public class MissionShip implements Spaceship<DiscoveryQuestGameInfo>{
 
 	@Override
 	public RegistrationData registerShip(int numImages, int worldWidth, int worldHeight) {
-		scannedIDs = new LinkedList<Integer>();
+		seenIDs = new LinkedList<Integer>();
+		actuallyScannedIDs = new LinkedList<Integer>();
 		commandQueue = new LinkedList<ShipCommand>();
-		center = new Point(worldWidth/2, worldHeight/2);
 		return new RegistrationData("Players Connected", Color.WHITE, 1);
 	}
 
